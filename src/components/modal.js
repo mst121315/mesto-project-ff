@@ -14,7 +14,7 @@ function openPopup (popup) {
   function closePopup (popup) {
     popup.classList.remove('popup_is-opened');
     popup.classList.remove('popup_is-animated');
-    
+
     document.removeEventListener('keydown', closePopupEsc);
     popup.removeEventListener('click', handleClosePopup);
   }
@@ -34,7 +34,7 @@ function openPopup (popup) {
     if (evt.target.classList.contains('popup')) {    // закрытие по оверлею
         closePopup(evt.target); 
       }
-      if (evt.target.classList.contains('popup__close')) {    // закрытие по крестику
+    if (evt.target.classList.contains('popup__close')) {    // закрытие по крестику
         closePopup(evt.target.closest(".popup"));
       }
   }

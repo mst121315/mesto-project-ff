@@ -26,26 +26,61 @@ const cardTemplate = document.querySelector('#card-template').content;
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 
-const popupTypeImage = document.querySelector('.popup_type_image'); 
+const popupTypeImage = document.querySelector('.popup_type_image');
+const popupImage = popupTypeImage.querySelector('.popup__image'); 
+const popupCaptionImage = popupTypeImage.querySelector('.popup__caption');
+
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
 
 const profileImage = document.querySelector('.profile__image');
-profileImage.style.backgroundImage = `url(${avatar})`;
 
-profileAddButton.addEventListener('click', () => openPopup(addPopup));
-editButton.addEventListener('click', () => openPopup(editProfilePopup));
-formEditProfile.addEventListener('submit', handleFormSubmit);
-formNewCard.addEventListener('submit', handleNewCard);
+const newCardName = document.querySelector('#place-name');
+const newCardJob= document.querySelector('#link');
 
-
+// функция увеличения картинки карточки
 function zoom (element) {
   openPopup(popupTypeImage);
 
-  const popupImage = popupTypeImage.querySelector('.popup__image'); 
-  const popupCaption = popupTypeImage.querySelector('.popup__caption');
-
   popupImage.src = element.link;
-  popupCaption.textContent = element.name;
+  popupCaptionImage.textContent = element.name;
 }
+
+// Обработчик «отправки» формы 
+function handleFormSubmitEditProfile(evt) {
+  evt.preventDefault();
+  
+  profileTitle.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
+  closePopup(evt.target.closest(".popup"));
+}
+
+// функция довавления новой карточки
+function handleNewCard (evt) {
+  evt.preventDefault();
+  
+  const element = {name: newCardName.value, link: newCardJob.value};
+  const cardsContainer = document.querySelector('.places__list');
+  const newCard = createCard(element, cardTemplate, zoom);
+
+  cardsContainer.prepend(newCard);
+  formNewCard.reset();
+  closePopup(evt.target.closest(".popup"));
+}
+
+// функция редактирования профиля
+function fillProfile () {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
+}
+
+profileImage.style.backgroundImage = `url(${avatar})`;
+
+profileAddButton.addEventListener('click', () => openPopup(addPopup));
+editButton.addEventListener('click', () => {
+  openPopup(editProfilePopup);
+  fillProfile();
+  });
 
 // Вывести карточки на страницу
 initialCards.forEach((element) => {
@@ -53,27 +88,6 @@ initialCards.forEach((element) => {
   cardsContainer.append(card);
 });
 
+formEditProfile.addEventListener('submit', handleFormSubmitEditProfile);
 
-// Обработчик «отправки» формы 
-function handleFormSubmit(evt) {
-  evt.preventDefault();
-  const profileTitle = document.querySelector('.profile__title');
-  const profileDescription = document.querySelector('.profile__description');
-  profileTitle.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-  closePopup(evt.target.closest(".popup"));
-}
-
-
-// функция довавления новой карточки
-function handleNewCard (evt) {
-  evt.preventDefault();
-  const newCardName = document.querySelector('#place-name');
-  const newCardJob= document.querySelector('#link');
-  const element = {name: newCardName.value, link: newCardJob.value};
-  const cardsContainer = document.querySelector('.places__list');
-  const newCard = createCard(element, cardTemplate, zoom);
-  cardsContainer.prepend(newCard);
-  formNewCard.reset();
-  closePopup(evt.target.closest(".popup"));
-}
+formNewCard.addEventListener('submit', handleNewCard);
