@@ -33,5 +33,3 @@ function createCard(element, cardTemplate, zoom) {
   }
 
   export { createCard };
-  export { deleteCard };
-  export { handleLike };

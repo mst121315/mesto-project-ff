@@ -2,9 +2,7 @@ import './pages/index.css';
 import avatar from './images/avatar.jpg';
 
 import { initialCards } from './components/cards.js';
-
 import { createCard } from './components/card.js';
-
 import { openPopup } from './components/modal.js';
 import { closePopup } from './components/modal.js';
 
