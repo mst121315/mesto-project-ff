@@ -6,6 +6,8 @@ import { createCard } from './components/card.js';
 import { openPopup } from './components/modal.js';
 import { closePopup } from './components/modal.js';
 
+import { clearValidation } from './components/validation.js';
+import { enableValidation } from './components/validation.js';
 
 const profileAddButton = document.querySelector('.profile__add-button'); // кнопка +
 const editButton = document.querySelector('.profile__edit-button'); // кнопка редактировать профиль
@@ -37,6 +39,15 @@ const profileImage = document.querySelector('.profile__image');
 const newCardName = document.querySelector('#place-name');
 const newCardJob= document.querySelector('#link');
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
 // функция увеличения картинки карточки
 function zoom (element) {
   openPopup(popupTypeImage);
@@ -65,6 +76,7 @@ function handleNewCard (evt) {
 
   cardsContainer.prepend(newCard);
   formNewCard.reset();
+  clearValidation(editProfilePopup, validationConfig);
   closePopup(evt.target.closest(".popup"));
 }
 
@@ -76,10 +88,14 @@ function fillProfile () {
 
 profileImage.style.backgroundImage = `url(${avatar})`;
 
-profileAddButton.addEventListener('click', () => openPopup(addPopup));
+profileAddButton.addEventListener('click', () => {
+  openPopup(addPopup);
+});
 editButton.addEventListener('click', () => {
   openPopup(editProfilePopup);
   fillProfile();
+  const form = editProfilePopup.querySelector(validationConfig.formSelector);
+  clearValidation(form, validationConfig);
   });
 
 // Вывести карточки на страницу
@@ -91,3 +107,6 @@ initialCards.forEach((element) => {
 formEditProfile.addEventListener('submit', handleFormSubmitEditProfile);
 
 formNewCard.addEventListener('submit', handleNewCard);
+
+enableValidation(validationConfig); 
+
