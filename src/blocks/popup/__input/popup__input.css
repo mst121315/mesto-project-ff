@@ -8,6 +8,7 @@
   box-sizing: border-box;
   padding: 10px 0 0;
   margin-bottom: 10px;
+  outline-offset: 1px;
 }
 
 .popup__input:last-of-type {
@@ -22,9 +23,11 @@
 }
 
 .popup__input_type_error {
-  border-bottom: #FF0000;
+  border-bottom: 1px solid red;
 }
 
-input-error {
-  display: none;
+.input-error {
+  font-weight: 400;
+  font-size: 12px;
+  color: #FF0000;
 }

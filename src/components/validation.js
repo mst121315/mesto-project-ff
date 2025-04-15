@@ -41,7 +41,7 @@ function checkInputValidity(formElement, inputElement) {
 function setValidationMessage(inputElement, message) {
     const span = inputElement.nextElementSibling;
     if(message) {
-        span.classList.add(config.errorClass); //need to add styles
+        span.classList.add(config.errorClass);               //need to add styles
         inputElement.classList.add(config.inputErrorClass)
     }
     else {
