@@ -1,3 +1,13 @@
 .card__like-button_is-active {
   background: transparent url('../../../../images/like-active.svg') no-repeat;
 }
+
+.like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.like-count {
+  font-size: 13px;
+}
