@@ -125,11 +125,11 @@ function handleNewCard(evt) {
         processDelete
       );
       cardsContainer.prepend(newCard);
+      closePopup(addPopup);
     })
     .catch((err) => {
       console.error("Произошла ошибка при загрузке данных:", err);
     });
-  closePopup(addPopup);
 }
 
 /**
