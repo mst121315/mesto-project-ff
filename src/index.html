@@ -14,8 +14,9 @@
   </header>
   <main class="content">
     <section class="profile page__section">
-      <div class="profile__image"></div>
-      <button class="profile__add-avatar" type="button"></button>
+      <div class="profile__image">
+        <button class="profile__add-avatar" type="button"></button>
+      </div>
       <div class="profile__info">
         <h1 class="profile__title"></h1>
         <button class="profile__edit-button" type="button"></button>
@@ -33,57 +34,59 @@
       © 2021 Mesto Russia
     </p>
   </footer>
-  <div class="popup popup_type_edit">
+  <div class="popup popup_type_edit popup_is-animated">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="popup__form" id="edit-profile-form" name="edit-profile-form" novalidate>
         <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" 
-        data-validate-symbols="1"
+        id="profile-name"
+        pattern="^[A-Za-zА-Яа-яЁё \-]+$"
         data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
          minlength="2" maxlength="40" required>
-         <span class="input-error"></span>
+         <span class="input-error profile-name-error"></span>
         <input type="text" name="description" class="popup__input popup__input_type_description" 
-        data-validate-symbols="1"
+        id="profile-description"
+        pattern="^[A-Za-zА-Яа-яЁё \-]+$"
         placeholder="Занятие" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" 
         minlength="2" maxlength="200" required>
-        <span class="input-error"></span>
+        <span class="input-error profile-description-error"></span>
         <button type="submit" class="button popup__button" data-processing="Сохранение...">Сохранить</button>
       </form>
     </div>
   </div>
-  <div class="popup popup_type_new-card">
+  <div class="popup popup_type_new-card popup_is-animated">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form class="popup__form" id="new-card-form" novalidate>
         <input type="text" name="place-name" id="place-name" class="popup__input popup__input_type_card-name" 
-        data-validate-symbols="1"
+        pattern="^[A-Za-zА-Яа-яЁё \-]+$"
         placeholder="Название" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"  
         minlength="2" maxlength="30" required>
-        <span class="input-error"></span>
+        <span class="input-error place-name-error"></span>
         <input type="url" name="link" id="link" class="popup__input popup__input_type_url" 
         placeholder="Ссылка на картинку" required>
-        <span class="input-error"></span>
+        <span class="input-error link-error"></span>
         <button type="submit" class="button popup__button">Создать</button>
       </form>
     </div>
   </div>
-  <div class="popup popup_type_image">
+  <div class="popup popup_type_image popup_is-animated">
     <div class="popup__content popup__content_content_image">
       <button type="button" class="popup__close"></button>
       <img src="" alt="" class="popup__image">
       <p class="popup__caption"></p>
     </div>
   </div>
-  <div class="popup popup_type_avatar">
+  <div class="popup popup_is-animated popup_type_avatar">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Обновить аватар</h3>
       <form class="popup__form" id="avatar-form" novalidate>
         <input type="url" name="avatar" id="avatar-url" class="popup__input popup__input_type_avatar"
         placeholder="Ссылка на картинку" required>
-        <span class="input-error"></span>
+        <span class="input-error avatar-url-error"></span>
         <button type="submit" class="button popup__button" data-processing="Сохранение...">Сохранить</button>
       </form>
     </div>
