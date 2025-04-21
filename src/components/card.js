@@ -6,7 +6,9 @@ function createCard(
   processLike,
   processDelete
 ) {
-  const cardElement = cardTemplate.querySelector(".places__item").cloneNode(true);
+  const cardElement = cardTemplate
+    .querySelector(".places__item")
+    .cloneNode(true);
   const imageElement = cardElement.querySelector(".card__image");
   const likeCountElement = cardElement.querySelector(".like-count");
 
@@ -21,17 +23,15 @@ function createCard(
   const deleteButton = cardElement.querySelector(".card__delete-button");
   if (element.owner._id == myId) {
     deleteButton.addEventListener("click", () =>
-      deleteCard(cardElement, deleteButton, processDelete)
+      deleteCard(cardElement, processDelete, cardId)
     );
-    deleteButton.dataset.cartId = cardId;
   } else {
     deleteButton.remove();
   }
 
   const likeButton = cardElement.querySelector(".card__like-button"); // лайк
-  likeButton.dataset.cartId = cardId;
   likeButton.addEventListener("click", () =>
-    handleLike(likeButton, processLike, likeCountElement)
+    handleLike(likeButton, processLike, likeCountElement, cardId)
   );
   if (element.likes.some((user) => user._id === myId)) {
     likeButton.classList.add("card__like-button_is-active");
@@ -42,19 +42,26 @@ function createCard(
   return cardElement;
 }
 
-function deleteCard(cardElement, deleteButton, processDelete) {
-  cardElement.remove();
-  processDelete(deleteButton.dataset.cartId);
+function deleteCard(cardElement, processDelete, cardId) {
+  processDelete(cardId)
+    .then(() => cardElement.remove())
+    .catch((err) => {
+      console.error("Произошла ошибка при загрузке данных:", err);
+    });
 }
 
-function handleLike(likeButton, processLike, likeCountElement) {
-  likeButton.classList.toggle("card__like-button_is-active");
+function handleLike(likeButton, processLike, likeCountElement, cardId) {
   processLike(
-    likeButton.classList.contains("card__like-button_is-active"),
-    likeButton.dataset.cartId
-  ).then((element) => {
-    likeCountElement.textContent = element.likes.length;
-  });
+    !likeButton.classList.contains("card__like-button_is-active"),
+    cardId
+  )
+    .then((element) => {
+      likeButton.classList.toggle("card__like-button_is-active");
+      likeCountElement.textContent = element.likes.length;
+    })
+    .catch((err) => {
+      console.error("Произошла ошибка при загрузке данных:", err);
+    });
 }
 
 export { createCard };

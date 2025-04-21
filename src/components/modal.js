@@ -3,7 +3,6 @@
  */
 function openPopup(popup) {
   popup.classList.add("popup_is-opened");
-  popup.classList.add("popup_is-animated");
 
   document.addEventListener("keydown", closePopupEsc);
   popup.addEventListener("click", handleClosePopup);
@@ -14,7 +13,6 @@ function openPopup(popup) {
  */
 function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
-  popup.classList.remove("popup_is-animated");
 
   document.removeEventListener("keydown", closePopupEsc);
   popup.removeEventListener("click", handleClosePopup);
