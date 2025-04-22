@@ -98,9 +98,9 @@ function handleFormSubmitEditProfile(evt) {
   evt.preventDefault();
   startLoader(evt.target);
   updateProfile(nameInput.value, jobInput.value)
-    .then(() => {
-      profileTitle.textContent = nameInput.value;
-      profileDescription.textContent = jobInput.value;
+    .then((profile) => {
+      profileTitle.textContent = profile.name;
+      profileDescription.textContent = profile.about;
       closePopup(editProfilePopup);
     })
     .catch((err) => {
@@ -114,6 +114,7 @@ function handleFormSubmitEditProfile(evt) {
  */
 function handleNewCard(evt) {
   evt.preventDefault();
+  startLoader(evt.target);
   addNewCard(newCardName.value, newCardJob.value)
     .then((newElement) => {
       const newCard = createCard(
@@ -129,7 +130,7 @@ function handleNewCard(evt) {
     })
     .catch((err) => {
       console.error("Произошла ошибка при загрузке данных:", err);
-    });
+    }).finally(() => stopLoader(evt.target));;
 }
 
 /**
@@ -147,7 +148,7 @@ function handleAvatarUpdate(evt) {
   updateAvatar(newAvatarUrl)
     .then((profileData) => {
       profileImage.style.backgroundImage = "url(" + profileData.avatar + ")";
-      closePopup(evt.target.closest(".popup"));
+      closePopup(popupTypeAvatar);
     })
     .catch((err) => {
       console.error("Произошла ошибка при загрузке данных:", err);
