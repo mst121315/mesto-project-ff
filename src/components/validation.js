@@ -32,18 +32,18 @@ function isValid(inputElement, elementError, config) {
 
 function toggleButtonState(popupInputs, button, config) {
   if (hasInvalidInput(popupInputs)) {
-    enableButton(button, config);
+    disableButton(button, config);
   } else {
-    dsableButton(button, config);
+    enableButton(button, config);
   }
 }
 
-function enableButton(button, config) {
+function disableButton(button, config) {
   button.disabled = true;
   button.classList.add(config.inactiveButtonClass);
 }
 
-function dsableButton(button, config) {
+function enableButton(button, config) {
   button.disabled = false;
   button.classList.remove(config.inactiveButtonClass);
 }
@@ -75,15 +75,12 @@ export function enableValidation(config) {
 export function clearValidation(formElement, config) {
   /** очищает ошибки валидации формы и делает кнопку неактивной */
   const button = formElement.querySelector(config.submitButtonSelector);
-  dsableButton(button, config);
-
-  const spanElements = Array.from(
-    formElement.getElementsByClassName(config.errorClass)
-  );
-  spanElements.forEach((span) => hideInputError(span, config));
+  disableButton(button, config);
 
   const popupInputs = formElement.querySelectorAll(config.inputSelector);
-  popupInputs.forEach((inputElement) =>
-    inputElement.classList.remove(config.inputErrorClass)
-  );
+  popupInputs.forEach((inputElement) => {
+    inputElement.classList.remove(config.inputErrorClass);
+    const spanElement = formElement.querySelector(`.${inputElement.id}-error`);
+    hideInputError(spanElement, config);
+  });
 }
